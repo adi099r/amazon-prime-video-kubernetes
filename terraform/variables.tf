@@ -3,7 +3,7 @@ variable "instance_name" {
 }
 
 variable "key_name" {
-  default = "cloudproject"                  # Names of key in aws
+  default = "cloudProject"                  # Names of key in aws
 }
 
 
