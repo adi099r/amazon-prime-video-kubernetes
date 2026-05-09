@@ -96,7 +96,7 @@ Create credentials to connect with your aws account
 Create EKS Cluster
 Execute the below commands as separate set
 (a)
-eksctl create cluster --name=Cloudaseem \
+eksctl create cluster --name=CloudProject \
                       --region=ap-south-1 \
                       --zones=ap-south-1a,ap-south-1b \
                       --version=1.30 \
@@ -108,7 +108,7 @@ Goto EKS Console and verify the cluster.
 (b)
 eksctl utils associate-iam-oidc-provider \
     --region ap-south-1 \
-    --cluster Cloudaseem \
+    --cluster CloudProject \
     --approve
 
 The above command is crucial when setting up an EKS cluster because it enables IAM roles for service accounts (IRSA)
@@ -120,7 +120,7 @@ Without this, these services will not be able to access AWS resources securely.
 (c)
 Before executing the below command, in the 'ssh-public-key' keep the  '<PEM FILE NAME>' (dont give .pem. Just give the pem file name) which was used to create Jenkins Server
 
-eksctl create nodegroup --cluster=Cloudaseem \
+eksctl create nodegroup --cluster=CloudProject \
                        --region=ap-south-1 \
                        --name=node2 \
                        --node-type=t3.medium \
@@ -143,11 +143,11 @@ It will take 5-10 minutes
 
 
 
-eksctl delete nodegroup --cluster=Cloudaseem --name=node2 --region=ap-south-1 --wait
+eksctl delete nodegroup --cluster=CloudProject --name=node2 --region=ap-south-1 --wait
 
-eksctl utils disassociate-iam-oidc-provider --cluster=Cloudaseem --region=ap-south-1
+eksctl utils disassociate-iam-oidc-provider --cluster=CloudProject --region=ap-south-1
 
-eksctl delete cluster --name=Cloudaseem --region=ap-south-1 --wait
+eksctl delete cluster --name=CloudProject --region=ap-south-1 --wait
 
 
 
@@ -186,7 +186,7 @@ Now, connect to the cluster using AWS CLI:
 aws eks update-kubeconfig --region <your-region> --name <your-cluster-name>
 
 
-aws eks update-kubeconfig --region ap-south-1 --name Cloudaseem
+aws eks update-kubeconfig --region ap-south-1 --name CloudProject
 
 kubectl get nodes
 
@@ -214,7 +214,7 @@ sudo systemctl restart jenkins
 
 Switch to Jenkins user
 sudo -su jenkins
-aws eks update-kubeconfig --region ap-south-1 --name Cloudaseem
+aws eks update-kubeconfig --region ap-south-1 --name CloudProject
 stage('Deploy to EKS Cluster') {
             steps {
                 dir('kubernetes') {
@@ -224,7 +224,7 @@ stage('Deploy to EKS Cluster') {
                     aws sts get-caller-identity
 
                     echo "Configuring kubectl for EKS cluster..."
-                    aws eks update-kubeconfig --region ap-south-1 --name Cloudaseem
+                    aws eks update-kubeconfig --region ap-south-1 --name CloudProject
 
                     echo "Verifying kubeconfig..."
                     kubectl config view
@@ -245,9 +245,9 @@ stage('Deploy to EKS Cluster') {
 2. delete Cluster and other resources we have used in AWS Cloud to avoid billing ##
 
 
- eksctl delete nodegroup --cluster=Cloudaseem --name=node2 --region=ap-south-1 --wait
+ eksctl delete nodegroup --cluster=CloudProject --name=node2 --region=ap-south-1 --wait
 
-  eksctl delete cluster --name=Cloudaseem --region=ap-south-1 --wait
+  eksctl delete cluster --name=CloudProject --region=ap-south-1 --wait
 
 
 
@@ -296,9 +296,9 @@ You have successfully created an EKS cluster with 2 nodes in AWS using eksctl. Y
 ## Step - 4 : After your practise, delete Cluster and other resources we have used in AWS Cloud to avoid billing ##
 
 ```
-eksctl delete nodegroup --cluster=Cloudaseem --name=node2 --region=ap-south-1 --wait
+eksctl delete nodegroup --cluster=CloudProject --name=node2 --region=ap-south-1 --wait
 
-eksctl delete cluster --name=Cloudaseem --region=ap-south-1 --wait
+eksctl delete cluster --name=CloudProject --region=ap-south-1 --wait
 
 
 ```

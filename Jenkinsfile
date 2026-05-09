@@ -73,10 +73,15 @@ pipeline{
         }
         stage('App Deploy to Docker container'){
             steps{
-                sh 'docker run -d --name amazon-prime-video -p 3000:3000 aditya099raj/amazon-prime-video:latest'
+                sh '''
+                    docker pull aditya099raj/amazon-prime-video:latest
+
+                    docker rm -f amazon-prime-video || true
+
+                    docker run -d --name amazon-prime-video -p 3000:3000 aditya099raj/amazon-prime-video:latest
+                '''
             }
         }
-
     }
     post {
     always {

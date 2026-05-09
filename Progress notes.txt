@@ -33,7 +33,7 @@ Overall Benefits of This Setup
 
 (a) Creating the EKS Cluster
 
-eksctl create cluster --name=Cloudaseem \
+eksctl create cluster --name=CloudProject \
                       --region=ap-south-1 \
                       --zones=ap-south-1a,ap-south-1b \
                       --version=1.30 \
@@ -54,7 +54,7 @@ EKS Console Verification – Once created, you can check the cluster in the AWS 
 
 eksctl utils associate-iam-oidc-provider \
     --region ap-south-1 \
-    --cluster Cloudaseem \
+    --cluster CloudProject \
     --approve
 Benefits:
 
@@ -68,7 +68,7 @@ OIDC Authentication – Amazon EKS supports OpenID Connect (OIDC) authentication
 
 (c) Creating the Node Group
 
-eksctl create nodegroup --cluster=Cloudaseem \
+eksctl create nodegroup --cluster=CloudProject \
                        --region=ap-south-1 \
                        --name=node2 \
                        --node-type=t3.medium \
@@ -77,7 +77,7 @@ eksctl create nodegroup --cluster=Cloudaseem \
                        --nodes-max=4 \
                        --node-volume-size=20 \
                        --ssh-access \
-                       --ssh-public-key=cloudaseem \
+                       --ssh-public-key=CloudProject \
                        --managed \
                        --asg-access \
                        --external-dns-access \
@@ -98,7 +98,7 @@ Right-Sized Compute Power – --node-type=t3.medium balances cost and performanc
 
 Persistent Storage – --node-volume-size=20 ensures 20GB of storage per node.
 
-Secure SSH Access – --ssh-access --ssh-public-key=Cloudaseem allows secure SSH access using the specified public key.
+Secure SSH Access – --ssh-access --ssh-public-key=CloudProject allows secure SSH access using the specified public key.
 
 AWS Service Integrations – The following flags enable integrations with AWS services:
 
