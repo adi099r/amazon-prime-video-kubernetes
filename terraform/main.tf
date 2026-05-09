@@ -13,11 +13,16 @@ provider "aws" {
   access_key = var.access_key
   secret_key = var.secret_key
 }
+data "aws_vpc" "default" {
+  default = true
+}
 
 # create security group for the ec2 instance
 resource "aws_security_group" "ec2_security_group" {
   name        = "ec2 security group"
   description = "allow access on ports 22"
+
+  vpc_id      = data.aws_vpc.default.id
 
   # allow access on port 22
   ingress {
